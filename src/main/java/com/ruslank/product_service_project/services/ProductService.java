@@ -18,12 +18,12 @@ public class ProductService {
     }
 
     public Product findProductByName(String name) {
-        return this.productRepository.findByName(name)
+        return this.productRepository.findByProductName(name)
                 .orElseThrow(() -> new RuntimeException("Product doesn't exist"));
     }
 
-    public void insertProduct(Product product) {
-        this.productRepository.save(product);
+    public Product insertProduct(Product product) {
+        return this.productRepository.save(product);
     }
 
     public Product updateProduct(Long productId, Product product) {
@@ -39,5 +39,12 @@ public class ProductService {
                 existingProduct.setProductQuantity(product.getProductQuantity());
         }
         return this.productRepository.save(existingProduct);
+    }
+
+    public String deleteProduct(Long productId) {
+        Product existing = this.productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("no product to delete"));
+        this.productRepository.deleteById(productId);
+        return "the PRODUCT IS DELETED";
     }
 }
