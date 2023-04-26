@@ -22,6 +22,12 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Product doesn't exist"));
     }
 
+    public Product findProductById(Long id) {
+        Product existingProduct = this.productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product by Id was not found"));
+        return existingProduct;
+    }
+
     public Product insertProduct(Product product) {
         return this.productRepository.save(product);
     }

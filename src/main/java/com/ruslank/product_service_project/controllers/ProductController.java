@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 @AllArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/product")
+    @GetMapping
     public List<Product> findAllProducts() {
         return this.productService.findAllProducts();
     }
@@ -25,17 +26,22 @@ public class ProductController {
         return new ResponseEntity<Product> (this.productService.findProductByName(name), HttpStatus.OK);
     }
 
-    @PostMapping("/product")
+    @GetMapping("/product/{id}")
+    public ResponseEntity<Product> findProductById(@PathVariable Long productId) {
+        return new ResponseEntity<Product>(this.productService.findProductById(productId), HttpStatus.OK);
+    }
+
+    @PostMapping("/product/create")
     public ResponseEntity<Product> insertProduct(@RequestBody Product product) {
         return new ResponseEntity<Product>(this.productService.insertProduct(product), HttpStatus.CREATED);
     }
 
-    @PutMapping("/product/{id}")
+    @PutMapping("/product/update/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         return new ResponseEntity<Product>(this.productService.updateProduct(id, product), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/product/delete{id}")
      public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         return new ResponseEntity<String>(this.productService.deleteProduct(id), HttpStatus.OK);
     }
