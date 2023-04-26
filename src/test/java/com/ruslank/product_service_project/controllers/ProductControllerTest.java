@@ -1,5 +1,6 @@
 package com.ruslank.product_service_project.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ruslank.product_service_project.services.ProductService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,13 @@ public class ProductControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @MockBean
     private ProductService productService;
+
+
 
     @Test
     @DisplayName("""
@@ -44,4 +50,8 @@ public class ProductControllerTest {
 //        mockMvc
 //                .perform(get("/products/{name}"))
 //    }
+
+    public void ProductController_InsertProduct_ReturnInserted() throws Exception {
+
+    }
 }
