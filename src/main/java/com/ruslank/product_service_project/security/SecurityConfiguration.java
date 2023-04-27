@@ -19,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
@@ -49,8 +51,7 @@ public class SecurityConfiguration {
     @Bean
     @Order(2)
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .formLogin()
+        return httpSecurity.formLogin()
                 .and()
                 .authorizeHttpRequests().anyRequest().authenticated()
                 .and()
@@ -72,6 +73,16 @@ public class SecurityConfiguration {
     public JWKSource<SecurityContext> jwkSource() {
         JWKSet jwkSet = new JWKSet(jwkManager.rsaKey());
         return new ImmutableJWKSet(jwkSet);
+    }
+
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> customizer() {
+        return context -> {
+            var authorities = context.getPrincipal().getAuthorities();
+
+            context.getClaims().claim("authorities", authorities
+                    .stream().map(a -> a.getAuthority()).toList());
+        };
     }
 
 }

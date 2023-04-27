@@ -5,7 +5,9 @@ import lombok.Data;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 
+import java.time.Duration;
 import java.util.UUID;
 
 @Data
@@ -63,6 +65,7 @@ public class Client {
                 .scope(client.getScope())
                 .authorizationGrantType(new AuthorizationGrantType(client.getGrantType()))
                 .redirectUri(client.getRedirectUri())
+                .tokenSettings(TokenSettings.builder().accessTokenTimeToLive(Duration.ofHours(10)).build())
                 .build();
     }
 }
