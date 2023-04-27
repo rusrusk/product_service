@@ -1,6 +1,5 @@
 package com.ruslank.product_service_project.services;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.ruslank.product_service_project.entities.Product;
 import com.ruslank.product_service_project.repositories.ProductRepository;
 import org.assertj.core.api.Assertions;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;

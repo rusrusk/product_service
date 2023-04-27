@@ -1,7 +1,6 @@
 package com.ruslank.product_service_project.services;
 
 import com.ruslank.product_service_project.entities.Product;
-import com.ruslank.product_service_project.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
