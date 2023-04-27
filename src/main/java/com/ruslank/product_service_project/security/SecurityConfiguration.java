@@ -1,5 +1,11 @@
 package com.ruslank.product_service_project.security;
 
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+import com.ruslank.product_service_project.security.keys.JWKManager;
+import lombok.AllArgsConstructor;
 import org.springframework.cglib.proxy.NoOp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +23,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 @Configuration
+@AllArgsConstructor
 public class SecurityConfiguration {
+
+    private final JWKManager jwkManager;
 
     @Bean
     @Order(1)
@@ -57,6 +66,12 @@ public class SecurityConfiguration {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
+    }
+
+    @Bean
+    public JWKSource<SecurityContext> jwkSource() {
+        JWKSet jwkSet = new JWKSet(jwkManager.rsaKey());
+        return new ImmutableJWKSet(jwkSet);
     }
 
 }
