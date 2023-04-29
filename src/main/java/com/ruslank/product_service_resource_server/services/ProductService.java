@@ -36,6 +36,7 @@ public class ProductService {
         Product existingProduct =
                 this.productRepository.findById(productId)
                         .orElseThrow(() -> new RuntimeException("no product to update"));
+        System.out.println("PRODUCT ================ " + product);
         if ((!"null".equals(existingProduct)) || (existingProduct != null)) {
             if (product.getProductName() != null)
                 existingProduct.setProductName(product.getProductName());
@@ -43,6 +44,7 @@ public class ProductService {
                 existingProduct.setProductPrice(product.getProductPrice());
             if (product.getProductQuantity() != null)
                 existingProduct.setProductQuantity(product.getProductQuantity());
+            System.out.println("AT THE END OF IF ================ " + existingProduct);
         }
         return this.productRepository.save(existingProduct);
     }

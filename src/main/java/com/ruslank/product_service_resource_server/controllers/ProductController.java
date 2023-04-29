@@ -22,14 +22,16 @@ public class ProductController {
         return this.productService.findAllProducts();
     }
 
-    @GetMapping("/product/{name}")
+    @GetMapping("/product/name/{name}")
     public ResponseEntity<Product> findProductByName(@PathVariable String name) {
+        System.out.println("productId ========= " + name);
         return new ResponseEntity<Product> (this.productService.findProductByName(name), HttpStatus.OK);
     }
 
-    @GetMapping("/product/{id}")
-    public ResponseEntity<Product> findProductById(@PathVariable Long productId) {
-        return new ResponseEntity<Product>(this.productService.findProductById(productId), HttpStatus.OK);
+    @GetMapping("/product/id/{id}")
+    public ResponseEntity<Product> findProductById(@PathVariable Long id) {
+        System.out.println("productId ========= " + id);
+        return new ResponseEntity<Product>(this.productService.findProductById(id), HttpStatus.OK);
     }
 
     @PostMapping("/product/create")
@@ -42,7 +44,7 @@ public class ProductController {
         return new ResponseEntity<Product>(this.productService.updateProduct(id, product), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/product/delete{id}")
+    @DeleteMapping("/product/delete/{id}")
      public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         return new ResponseEntity<String>(this.productService.deleteProduct(id), HttpStatus.OK);
     }
